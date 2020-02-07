@@ -1,8 +1,7 @@
 {
   "Actor": {
     "types": [
-      "character",
-      "creature"
+      "character"
     ],
 
     "templates": {
