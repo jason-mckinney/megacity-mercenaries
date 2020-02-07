@@ -1,0 +1,221 @@
+.megacity-mercenaries.sheet .window-content {
+    padding: 5px;
+    overflow-y: hidden;
+}
+
+/* Sheet Header */
+.megacity-mercenaries.sheet .sheet-header {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex: 0 0 100px;
+    margin-bottom: 10px;
+}
+
+.megacity-mercenaries.sheet .profile-img {
+    flex: 0 0 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.megacity-mercenaries.sheet .header-fields {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+}
+.megacity-mercenaries.sheet .header-fields span {
+    align-self: flex-end;
+    margin-bottom: 3px;
+}
+.megacity-mercenaries.sheet .header-fields div {
+    display: flex;
+    flex-direction: row-reverse;
+    height: auto;
+}
+.megacity-mercenaries.sheet .charspecies  {
+    width: 100%;
+    padding: 5px;
+    margin: 0;
+    border-bottom: 0;
+    font-size: 12pt;
+}
+
+.megacity-mercenaries.sheet .charname {
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    margin: 0;
+    border-bottom: 0;
+}
+.megacity-mercenaries.sheet .charname input {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.megacity-mercenaries.sheet .sheet-hr {
+    border-top: 1px solid #a9a9a9; 
+    border-bottom: unset;
+}
+
+.megacity-mercenaries.sheet .stat-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 275px;
+    height: fit-content;
+    margin-top: 20px;
+    padding-right: 5px;
+}
+.megacity-mercenaries.sheet .stat-container .stat{
+    margin-bottom: 10px;
+}
+.megacity-mercenaries.sheet .stat-container .stat span {
+    margin-bottom: -3px;
+}
+
+.megacity-mercenaries.sheet .stat {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.megacity-mercenaries.sheet .stat input {
+    margin-top: 3px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    min-width: auto;
+    place-self: center;
+    font-size: 12pt;
+}
+.megacity-mercenaries.sheet .stat span {
+    place-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.megacity-mercenaries.sheet .stat .input-small {
+    width: 25px;
+    height: 25px;
+    margin-top: 18px;
+    font-size: 10pt;
+}
+.megacity-mercenaries.sheet .stat .input-large {
+    width: 40px;
+    height: 40px;
+    font-size: 14pt;
+}
+.megacity-mercenaries.sheet .stat .input-wide {
+    width: 100px;
+    height: 40px;
+    font-size: 14pt;
+}
+
+.megacity-mercenaries.sheet .checkresource {
+    height: 40px;
+    width: 50%;
+    padding: 3px 10px;
+    float: left;
+}
+.megacity-mercenaries.sheet .checkresource input {
+    width: 25px;
+    height: 15px;
+    margin: 10px;
+}
+
+/* Navigation Tabs */
+.megacity-mercenaries.sheet .tabs {
+    flex: 0 0 40px;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+}
+
+.megacity-mercenaries.sheet .tabs .item {
+    line-height: 25px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.megacity-mercenaries.sheet .tabs .item.active {
+    text-decoration: underline;
+    text-shadow: none;
+}
+
+/* Content Tabs */
+.megacity-mercenaries.sheet .sheet-body {
+    height: calc(100% - 192px);
+}
+.megacity-mercenaries.sheet .sheet-body .tab {
+    height: 100%;
+}
+.megacity-mercenaries.sheet .sheet-body .editor {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Items */
+.megacity-mercenaries.sheet .items-list {
+    list-style: none;
+    margin: 7px 0;
+    padding: 0;
+    overflow-y: auto;
+}
+.megacity-mercenaries.sheet .items-list .item {
+    height: 30px;
+    line-height: 24px;
+    padding: 3px 0;
+    border-bottom: 1px solid #BBB;
+}
+.megacity-mercenaries.sheet .items-list .item img {
+    flex: 0 0 24px;
+    margin-right: 5px;
+}
+.megacity-mercenaries.sheet .items-list .item-name {
+    margin: 0;
+}
+.megacity-mercenaries.sheet .items-list .item-controls {
+    flex: 0 0 54px;
+}
+
+/* Attributes */
+.megacity-mercenaries.sheet .attributes-header { 
+    padding: 5px;
+    margin: 5px 0;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: bold;
+}
+.megacity-mercenaries.sheet .attribute-label { 
+    flex: 1.5;
+}
+.megacity-mercenaries.sheet .attribute-control { 
+    flex: 0 0 20px;
+}
+
+.megacity-mercenaries.sheet .attributes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.megacity-mercenaries.sheet .attributes-list li > * {
+    margin: 0 3px;
+    height: 28px;
+    line-height: 24px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #AAA;
+}
+
+.megacity-mercenaries.sheet .attribute-value.checkbox {
+    text-align: center;
+}
+
+.megacity-mercenaries.sheet .attributes-list li a.attribute-control {
+    border: none;
+}

@@ -1,0 +1,343 @@
+{
+  "Actor": {
+    "types": [
+      "character",
+      "creature"
+    ],
+
+    "templates": {
+      "common": {
+        "health": {
+          "value": 15,
+          "min": 0,
+          "max": 15
+        },
+        "armor": {
+          "dtype": "Number",
+          "value": 0,
+          "max": 12
+        },
+        "body": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "agility": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "mind": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "senses": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "guile": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "will": {
+          "dtype": "Number",
+          "value": 2,
+          "min": 1,
+          "max": 6
+        },
+        "speed": {
+          "dtype": "Number",
+          "value": 4
+        },
+        "willdefense": {
+          "dtype": "Number",
+          "value": 14
+        },
+        "meleedefense": {
+          "dtype": "Number",
+          "value": 12
+        }
+      }
+    },
+
+    "character": {
+      "templates": [
+        "common"
+      ],
+      "species": {
+        "dtype": "String",
+        "value": ""
+      },
+      "biography": "",
+      "health": {
+        "dtype": "Number",
+        "value": 15,
+        "min": 0,
+        "max": 15
+      },
+      "soul": {
+        "dtype": "Number",
+        "value": 7
+      },
+      "moxie": {
+        "dtype": "Number",
+        "value": 2,
+        "max": 2
+      },
+      "magic": {
+        "dtype": "Number",
+        "value": 0
+      },
+      "machine": {
+        "dtype": "Number",
+        "value": 0
+      },
+      "money": {
+        "dtype": "Number",
+        "value": 0
+      },
+      "xp": {
+        "dtype": "Number",
+        "value": 0,
+        "max": 0
+      },
+      "attributes": {
+        "research": {
+          "name": "research",
+          "label": "research",
+          "formula": "$research",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "networks": {
+          "name": "networks",
+          "label": "networks",
+          "formula": "$networks",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "software": {
+          "name": "software",
+          "label": "software",
+          "formula": "$software",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "hardware": {
+          "name": "hardware",
+          "label": "hardware",
+          "formula": "$hardware",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "charm": {
+          "name": "charm",
+          "label": "charm",
+          "formula": "$charm",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "intimidation": {
+          "name": "intimidation",
+          "label": "intimidation",
+          "formula": "$intimidation",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "deception": {
+          "name": "deception",
+          "label": "deception",
+          "formula": "$deception",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "diplomacy": {
+          "name": "diplomacy",
+          "label": "diplomacy",
+          "formula": "$diplomacy",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "scrutiny": {
+          "name": "scrutiny",
+          "label": "scrutiny",
+          "formula": "$scrutiny",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "medical": {
+          "name": "medical",
+          "label": "medical",
+          "formula": "$medical",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "chemistry": {
+          "name": "chemistry",
+          "label": "chemistry",
+          "formula": "$chemistry",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "mechanics": {
+          "name": "mechanics",
+          "label": "mechanics",
+          "formula": "$mechanics",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "occult": {
+          "name": "occult",
+          "label": "occult",
+          "formula": "$occult",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "politics": {
+          "name": "politics",
+          "label": "politics",
+          "formula": "$politics",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "driving": {
+          "name": "driving",
+          "label": "driving",
+          "formula": "$driving",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "stealth": {
+          "name": "stealth",
+          "label": "stealth",
+          "formula": "$stealth",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "sleightofhand": {
+          "name": "sleight of hand",
+          "label": "sleight of hand",
+          "formula": "$sleightofhand",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "survival": {
+          "name": "survival",
+          "label": "survival",
+          "formula": "$survival",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "acrobatics": {
+          "name": "acrobatics",
+          "label": "acrobatics",
+          "formula": "$acrobatics",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "crime": {
+          "name": "crime",
+          "label": "crime",
+          "formula": "$crime",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "smallarms": {
+          "name": "small arms",
+          "label": "small arms",
+          "formula": "$smallarms",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "longarms": {
+          "name": "long arms",
+          "label": "long arms",
+          "formula": "$longarms",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "heavyarms": {
+          "name": "heavy arms",
+          "label": "heavy arms",
+          "formula": "$heavyarms",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "melee": {
+          "name": "melee",
+          "label": "melee",
+          "formula": "$melee",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "tactics": {
+          "name": "tactics",
+          "label": "tactics",
+          "formula": "$tactics",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "casting": {
+          "name": "casting",
+          "label": "casting",
+          "formula": "$casting",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        },
+        "dispelling": {
+          "name": "dispelling",
+          "label": "dispelling",
+          "formula": "$dispelling",
+          "min": 0,
+          "dtype": "Number",
+          "value": 0
+        }
+      }
+    }
+  },
+
+  "Item": {
+    "types": [
+      "item"
+    ],
+
+    "item": {
+      "description": "",
+      "attributes": {}
+    }
+  }
+}

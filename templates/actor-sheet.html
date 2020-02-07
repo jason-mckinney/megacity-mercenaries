@@ -1,0 +1,188 @@
+<form class="{{cssClass}}" style="height: 100%;" autocomplete="off">
+    {{!-- Header --}}
+    <header style="display: flex; flex-wrap: wrap;">
+        {{!-- Actor Image --}}
+        <div><img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/></div>
+        
+        {{!-- Soul --}}
+        <div class="stat" style="flex: 1; margin-top: 10px;">
+            {{#if data.soul}}
+                <span>Soul</span>
+                <input class="input-large" type="text" name="data.soul.value" value="{{data.soul.value}}" data-dtype="Number"/>
+            {{/if}}
+        </div>
+
+        {{!-- Name and Species --}}
+        <div class="header-fields">
+            <div>
+                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+                <span>Name: </span>
+            </div>
+            {{#if data.species}}
+                <div>
+                    <h1 class="charspecies"><input type="text" name="data.species.value" value="{{data.species.value}}" data-dtype="String"/></h1>
+                    <span style="margin-left: -10px;">Species: </span>
+                </div>           
+            {{/if}}
+        </div>
+        
+        <hr class="sheet-hr" style="width: 100%; margin-bottom: 2px;"/>
+
+        {{!-- Main Stats --}}
+        <div style="display: flex; width: 100%; height: auto; margin-bottom: 7px;">
+            <div class="stat">
+                <span>Body</span>
+                <input type="text" name="data.body.value" value="{{data.body.value}}" data-dtype="Number"/>
+            </div>
+            <div class="stat">
+                <span>Agility</span>
+                <input type="text" name="data.agility.value" value="{{data.agility.value}}" data-dtype="Number"/>
+            </div>
+            <div class="stat">
+                <span>Mind</span>
+                <input type="text" name="data.mind.value" value="{{data.mind.value}}" data-dtype="Number"/>
+            </div>
+            <div class="stat">
+                <span>Senses</span>
+                <input type="text" name="data.senses.value" value="{{data.senses.value}}" data-dtype="Number"/>
+            </div>
+            <div class="stat">
+                <span>Guile</span>
+                <input type="text" name="data.guile.value" value="{{data.guile.value}}" data-dtype="Number"/>
+            </div>
+            <div class="stat">
+                <span>Will</span>
+                <input type="text" name="data.will.value" value="{{data.will.value}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </header>
+
+    {{!-- Tab navigator --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="stats">Stats and Skills</a>
+        <a class="item" data-tab="description">Description and Traits</a>
+        <a class="item" data-tab="gear">Gear</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body" style="display: inline-block; width: 100%;">
+        {{!-- Stats and Skills --}}
+        <div class="tab stats active" data-group="primary" data-tab="stats">
+            <div style="display: flex; width: 100%; height: 100%;">
+                {{!-- Stats --}}
+                <div class="stat-container">
+                    <div class="stat" style="flex-basis: 50%; padding-left: 35px;">
+                        <span style="margin-right: 25px;">Health</span>
+                        <div style="display: flex; place-content: center;"> 
+                            <input class="input-large" type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                            <input class="input-small" type="text" readonly name="data.health.max" value="{{calcMaxHealth data}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                    <div class="stat" style="flex-basis: 50%; padding-right: 35px;">
+                        <span style="margin-right: 25px;">Moxie</span>
+                        <div style="display: flex; place-content: center;"> 
+                            <input class="input-large" type="text" name="data.moxie.value" value="{{data.moxie.value}}" data-dtype="Number"/>
+                            <input class="input-small" type="text" name="data.moxie.max" value="{{data.moxie.max}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Speed</span>
+                        <input class="input-large" readonly type="text" name="data.speed.value" value="{{calcSpeed data}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Magic</span>
+                        <input class="input-large" type="text" name="data.magic.value" value="{{data.magic.value}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Machine</span>
+                        <input class="input-large" type="text" name="data.machine.value" value="{{data.machine.value}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Armor</span>
+                        <input class="input-large" type="text" name="data.armor.value" value="{{calcArmor data}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Melee Def.</span>
+                        <input class="input-large" readonly type="text" name="data.meleedefense.value" value="{{calcMeleeDefense data}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex-basis: 33%;">
+                        <span>Will Def.</span>
+                        <input class="input-large" readonly type="text" name="data.willdefense.value" value="{{calcWillDefense data}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat" style="flex: 2; padding-right: 12px;">
+                        <span>$</span>
+                        <input class="input-wide" type="text" name="data.money.value" value="{{data.money.value}}" data-dtype="Number"/>
+                    </div>
+                    <div class="stat">
+                        <span style="padding-right: 5px;">XP Unspent/Total</span>
+                        <div style="display: flex; place-content: center; padding-left: 5px;"> 
+                            <input class="input-large" type="text" name="data.xp.value" value="{{data.xp.value}}" data-dtype="Number"/>
+                            <input class="input-small" style="width: 30px;" type="text" name="data.xp.max" value="{{data.xp.max}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                </div>
+                
+                {{!-- Divider --}}
+                <div style="width: 0px; height: 100%; float: left; border: solid 0.5px #a9a9a9;"></div>
+                
+                {{!-- Skill List --}}
+                <div class="attributes" style="flex: 1; overflow: auto;">
+                    <header class="attributes-header flexrow">
+                        <!-- <span class="dice" style="flex: 0.5">Roll</span> -->
+                        <span class="attribute-key">Skill</span>
+                        <span class="attribute-value" style="flex: 0.5">Rank</span>
+                        <span class="attribute-dtype">Data Type</span>
+                        <a class="attribute-control" data-action="create"><i class="fas fa-plus"></i></a>
+                    </header>
+        
+                    <ol class="attributes-list">
+                    {{#each data.attributes as |attr key|}}
+                        <li class="attribute flexrow" data-attribute="{{key}}">
+                            <!-- <a class="attribute-control" data-action="beffort" style="transform: translate(4px, 5px); margin-right: -5px;"><i class="fas fa-play" style="transform: rotate(30deg);"></i></a>
+                            <a class="attribute-control" data-action="aeffort" style="transform: translate(0px, 3px); margin-right: -5px;"><i class="fas fa-square"></i></a>
+                            <a class="attribute-control" data-action="meffort" style="transform: translate(-3px, 3px); margin-right: -5px;"><i class="fas fa-square" style="transform: scale(0.85) rotate(45deg) skew(5deg, 5deg);"></i></a>
+                            <a class="attribute-control" data-action="ueffort" style="transform: translate(-7px, 3px); margin-right: -5px;"><i class="fas fa-dice-d20"></i></a> -->
+                            <input class="attribute-key" type="text" name="data.attributes.{{key}}.key" value="{{key}}"/>
+                            {{#if attr.isCheckbox}}
+                            <label class="attribute-value checkbox"><input type="checkbox" name="data.attributes.{{key}}.value" {{checked attr.value}} style="flex: 0.5"/></label>
+                            {{else}}
+                            <input class="attribute-value" type="text" name="data.attributes.{{key}}.value" value="{{attr.value}}" data-dtype="{{attr.dtype}}" style="flex: 0.5"/>
+                            {{/if}}
+                            <select class="attribute-dtype" name="data.attributes.{{key}}.dtype">
+                                {{#select attr.dtype}}
+                                {{#each ../dtypes as |t|}}
+                                <option value="{{t}}">{{t}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                            <a class="attribute-control" data-action="delete"><i class="fas fa-trash"></i></a>
+                        </li>
+                    {{/each}}
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Biography and Traits --}}
+        <div class="tab biography" data-group="primary" data-tab="description">
+            {{editor content=data.biography target="data.biography" button=true owner=owner editable=editable}}
+        </div>
+
+        {{!-- Gear --}}
+        <div class="tab items" data-group="primary" data-tab="gear">
+            <ol class="items-list">
+            {{#each actor.items as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                    <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
+                </li>
+            {{/each}}
+            </ol>
+        </div>
+    </section>
+</form>
+
