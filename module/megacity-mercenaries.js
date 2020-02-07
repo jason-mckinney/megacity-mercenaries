@@ -55,19 +55,83 @@ Hooks.on("canvasInit", function() {
   SquareGrid.prototype.measureDistance = measureDistance;
 });
 
-//initiative command
 Hooks.on("chatMessage", (chatlog, message) => {
   let [command, m] = parse(message);
-
   switch (command) {
-    case "initiative":
+    case "skillcheck":
       const token = canvas.tokens.get(ChatMessage.getSpeaker().token);
-      if (!token) { break; }
+      if (!token) { 
+        ui.notifications.warn('A token is required for skill checks, but no token was selected.');
+        return true; 
+      }
 
-      let attr = message.replace(/\/i(?:nitiative)?/, "").trim();
-      attr = getAttributeValue(token.actor, attr);
-      
-      game.combat.rollInitiative(game.combat.getCombatantByToken(token.id)._id, CONFIG.initiative.formula + "+" + attr);
+      let alert = function (message, rollMode=game.settings.get("core", "rollMode")) {
+        let chatData = mergeObject(
+          {
+            content: "<div class=\"dice-roll\">"
+                    + "<h4 style=\"font-size: 16px; font-weight: bold\" class=\"dice-formula\">"
+                    + message
+                    + "</h4></div></div>"
+          }, 
+          {
+            user: game.user._id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            blind: rollMode === "blindroll"
+          }
+        );
+        
+        switch(rollMode) {
+          case "gmroll": case "blindroll":
+            chatData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+            break;
+          case "selfroll":
+            chatData.whisper = [game.user._id];
+            break;
+        }
+
+        ChatMessage.create(chatData);
+      };
+
+      let die = "2d10";
+      let formula = message.replace(/\/s(?:kill)?c(?:heck)?/, "").trim();
+
+      let match = formula.match(/(#bb)|(#b)|(#pp)|(#p)/);
+      if (match) {
+        switch(match[0]) {
+          case "#bb":
+            die = "4d10kh2";
+            break;
+          case "#b":
+            die = "3d10kh2";
+            break;
+          case "#pp":
+            die = "4d10kl2";
+            break;
+          case "#p":
+            die = "3d10kl2";
+            break;
+        }
+
+        formula = formula.replace(/(#bb)|(#b)|(#pp)|(#p)/g, "");
+      }
+
+      match = formula.match(/(\S+)( +(\S+))?/);
+      if (match) {
+        formula = die + " + " + getAttributeValue(token.actor, match[1]);
+        if (match[3]) {
+          formula += " + " + getAttributeValue(token.actor, match[3]);
+        }
+        
+        let roll = megacityRoll(formula);
+        
+        if(roll.dice[0].total <= 3) {
+          alert(token.actor.name + " FUMBLED!");
+        } else if (roll.dice[0].total >= 19) {
+          alert(token.actor.name + " CRIT!");
+        }
+      } else {
+        return true;
+      }
 
       return false;
   }
@@ -107,7 +171,6 @@ function megacityRoll (formula, {targetActor=null, rollMode=game.settings.get("c
   const actor = targetActor ? targetActor : game.actors.get(speaker.actor);
   const token = canvas.tokens.get(speaker.token);
   const character = game.user.character;
-  let isHard = false;
 
   formula = formula.replace(/#\S*/g, "").trim();
 
@@ -158,6 +221,7 @@ function parse(message) {
   const gm = '^(\\/gmr(?:oll)? )';          // GM rolls, support /gmr or /gmroll
   const br = '^(\\/b(?:lind)?r(?:oll)? )';  // Blind rolls, support /br or /blindroll
   const sr = '^(\\/s(?:elf)?r(?:oll)? )';   // Self rolls, support /sr or /sroll
+  const sc = '^(\\/s(?:kill)?c(?:heck)? )';
   const initiative = '^(\\/i(?:nitiative)? )';
   const any = '([^]*)';                     // Any character, including new lines
   const word = '\\S+';
@@ -168,7 +232,8 @@ function parse(message) {
     "gmroll": new RegExp(gm+formula, 'i'),
     "blindroll": new RegExp(br+formula, 'i'),
     "selfroll": new RegExp(sr+formula, 'i'),
-    "initiative": new RegExp(initiative+word+'$', 'i'),
+    "skillcheck": new RegExp(sc+formula, 'i'),
+    "initiative": new RegExp(initiative+formula+'$', 'i'),
     "ic": new RegExp('^(\/ic )'+any, 'i'),
     "ooc": new RegExp('^(\/ooc )'+any, 'i'),
     "emote": new RegExp('^(\/em(?:ote)? )'+any, 'i'),
