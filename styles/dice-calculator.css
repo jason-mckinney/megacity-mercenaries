@@ -66,6 +66,17 @@
   text-transform: uppercase;
 }
 
+.dialog--dice-calculator .roll-button {
+  background-color: rgba(76, 177, 0, 0.5);
+  border-color: rgba(66, 150, 0);
+  font-weight: bold;
+  font-size: 18px;
+  height: 32px;
+  line-height: 1;
+  text-transform: uppercase;
+  grid-column: 1/-1;
+}
+
 .dice-calculator--stat,
 .dice-calculator--attr,
 .dice-calculator--custom {

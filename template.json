@@ -336,6 +336,7 @@
 
     "item": {
       "description": "",
+      "equipped": false,
       "attributes": {}
     }
   }

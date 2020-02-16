@@ -62,6 +62,32 @@ export class MegacityActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    // Equip Inventory Item
+    html.find('.item-equip').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      
+      //item.data.data.equipped = true;
+      const updateData = {data: {equipped: true}};
+      item.update(updateData);
+      // console.log(item);
+
+      this.render(false);
+    });
+
+    // Unequip Inventory Item
+    html.find('.item-unequip').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+
+      //item.data.data.equipped = false;
+      const updateData = {data: {equipped: false}};
+      item.update(updateData);
+      // console.log(item);
+      
+      this.render(false);
+    });
+
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");

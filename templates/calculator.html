@@ -1,6 +1,10 @@
 <div class="dice-calculator">
   <div class="dice-calculator__input">
-    <label for="dice-calculator">/roll</label>
+    <label style="padding-right: 2px;" for="dice-calculator">/</label>
+    <select style="margin-right: 4px;" id="dice-calculator" name="dice-calculator">
+      <option value="sc">sc</option>
+      <option value="roll">roll</option>
+    </select>
     <div class="dice-calculator__input-wrapper">
       <textarea class="dice-calculator__text-input" type="text" name="dice-calculator"></textarea>
       {{#if rolls}}
@@ -65,4 +69,5 @@
     </div>
     {{/if}}
   </div>
+  <button class="dice-calculator--button roll-button" data-formula="ROLL">ROLL</button>
 </div>

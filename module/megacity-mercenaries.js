@@ -10,6 +10,7 @@ import { measureDistance } from "./canvas.js";
 Hooks.once("init", async function() {
   game.getAttributeValue = getAttributeValue;
   game.megacityRoll = megacityRoll;
+  game.megacitySkillCheck = megacitySkillCheck;
 
 	/**
 	 * Set an initiative formula for the system
@@ -59,81 +60,7 @@ Hooks.on("chatMessage", (chatlog, message) => {
   let [command, m] = parse(message);
   switch (command) {
     case "skillcheck":
-      const token = canvas.tokens.get(ChatMessage.getSpeaker().token);
-      if (!token) { 
-        ui.notifications.warn('A token is required for skill checks, but no token was selected.');
-        return true; 
-      }
-
-      let alert = function (message, rollMode=game.settings.get("core", "rollMode")) {
-        let chatData = mergeObject(
-          {
-            content: "<div class=\"dice-roll\">"
-                    + "<h4 style=\"font-size: 16px; font-weight: bold\" class=\"dice-formula\">"
-                    + message
-                    + "</h4></div></div>"
-          }, 
-          {
-            user: game.user._id,
-            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-            blind: rollMode === "blindroll"
-          }
-        );
-        
-        switch(rollMode) {
-          case "gmroll": case "blindroll":
-            chatData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
-            break;
-          case "selfroll":
-            chatData.whisper = [game.user._id];
-            break;
-        }
-
-        ChatMessage.create(chatData);
-      };
-
-      let die = "2d10";
-      let formula = message.replace(/\/s(?:kill)?c(?:heck)?/, "").trim();
-
-      let match = formula.match(/(#bb)|(#b)|(#pp)|(#p)/);
-      if (match) {
-        switch(match[0]) {
-          case "#bb":
-            die = "4d10kh2";
-            break;
-          case "#b":
-            die = "3d10kh2";
-            break;
-          case "#pp":
-            die = "4d10kl2";
-            break;
-          case "#p":
-            die = "3d10kl2";
-            break;
-        }
-
-        formula = formula.replace(/(#bb)|(#b)|(#pp)|(#p)/g, "");
-      }
-
-      match = formula.match(/(\S+)( +(\S+))?/);
-      if (match) {
-        formula = die + " + " + getAttributeValue(token.actor, match[1]);
-        if (match[3]) {
-          formula += " + " + getAttributeValue(token.actor, match[3]);
-        }
-        
-        let roll = megacityRoll(formula);
-        
-        if(roll.dice[0].total <= 3) {
-          alert(token.actor.name + " FUMBLED!");
-        } else if (roll.dice[0].total >= 19) {
-          alert(token.actor.name + " CRIT!");
-        }
-      } else {
-        return true;
-      }
-
-      return false;
+      megacitySkillCheck(message);
   }
 
   return true;
@@ -164,6 +91,87 @@ function getAttributeValue(actor, attribute) {
       attr = actor.data.data.attributes[attribute] ;
       return attr ? attr.value : 0;   
   }
+}
+
+function megacitySkillCheck (message) {
+  const token = canvas.tokens.get(ChatMessage.getSpeaker().token);
+  if (!token) { 
+    ui.notifications.warn('A token is required for skill checks, but no token was selected.');
+    return true; 
+  }
+
+  let alert = function (message, rollMode=game.settings.get("core", "rollMode")) {
+    let chatData = mergeObject(
+      {
+        content: "<div class=\"dice-roll\">"
+                + "<h4 style=\"font-size: 16px; font-weight: bold\" class=\"dice-formula\">"
+                + message
+                + "</h4></div></div>"
+      }, 
+      {
+        user: game.user._id,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        blind: rollMode === "blindroll"
+      }
+    );
+    
+    switch(rollMode) {
+      case "gmroll": case "blindroll":
+        chatData.whisper = game.users.entities.filter(u => u.isGM).map(u => u._id);
+        break;
+      case "selfroll":
+        chatData.whisper = [game.user._id];
+        break;
+    }
+
+    ChatMessage.create(chatData);
+  };
+
+  let die = "2d10";
+  let formula = message.replace(/\/s(?:kill)?c(?:heck)?/, "").trim();
+
+  let match = formula.match(/(#bb)|(#b)|(#pp)|(#p)/);
+  if (match) {
+    switch(match[0]) {
+      case "#bb":
+        die = "4d10kh2";
+        break;
+      case "#b":
+        die = "3d10kh2";
+        break;
+      case "#pp":
+        die = "4d10kl2";
+        break;
+      case "#p":
+        die = "3d10kl2";
+        break;
+    }
+
+    formula = formula.replace(/(#bb)|(#b)|(#pp)|(#p)/g, "");
+  }
+
+  match = formula.match(/(\S+)( +(\S+))?/);
+  if (match) {
+    console.log(match[1]);
+    console.log(match[3]);
+
+    formula = die + " + " + getAttributeValue(token.actor, match[1].replace('$', ''));
+    if (match[3]) {
+      formula += " + " + getAttributeValue(token.actor, match[3].replace('$', ''));
+    }
+    
+    let roll = megacityRoll(formula);
+    
+    if(roll.dice[0].total <= 3) {
+      alert(token.actor.name + " FUMBLED!");
+    } else if (roll.dice[0].total >= 19) {
+      alert(token.actor.name + " CRIT!");
+    }
+  } else {
+    return true;
+  }
+
+  return false;
 }
 
 function megacityRoll (formula, {targetActor=null, rollMode=game.settings.get("core", "rollMode"), chatData={}, display=true}={}) {

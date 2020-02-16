@@ -20,20 +20,6 @@
     margin-right: 10px;
 }
 
-.megacity-mercenaries.sheet .header-fields {
-    display: flex;
-    flex: 2;
-    flex-direction: column;
-}
-.megacity-mercenaries.sheet .header-fields span {
-    align-self: flex-end;
-    margin-bottom: 3px;
-}
-.megacity-mercenaries.sheet .header-fields div {
-    display: flex;
-    flex-direction: row-reverse;
-    height: auto;
-}
 .megacity-mercenaries.sheet .charspecies  {
     width: 100%;
     padding: 5px;
@@ -158,9 +144,10 @@
 /* Items */
 .megacity-mercenaries.sheet .items-list {
     list-style: none;
-    margin: 7px 0;
-    padding: 0;
+    margin: 0 0;
+    padding: 2px 0 0;
     overflow-y: auto;
+    flex: 1;
 }
 .megacity-mercenaries.sheet .items-list .item {
     height: 30px;

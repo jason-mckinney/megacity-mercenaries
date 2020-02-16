@@ -13,9 +13,17 @@ $(document).ready(() => {
    *
    * @return {undefined}
    */
-  function dcRollDice(actor = false) {
+  function dcRollDice(actor=false, rollMode='roll') {
     let formula = $('.dice-calculator textarea').val();
-    game.megacityRoll(formula);
+    if (formula) {
+      switch (rollMode) {
+        case 'sc':
+          game.megacitySkillCheck('/sc ' + formula);
+          return;
+        default:
+          game.megacityRoll(formula);    
+      }
+    }
   }
 
   // Render a modal on click.
@@ -32,9 +40,6 @@ $(document).ready(() => {
         left: window.innerWidth - 710,
         classes: ['dialog', 'dialog--dice-calculator']
       };
-
-      let token = canvas.tokens.get(ChatMessage.getSpeaker().token);
-      let actor = token ? token.actor : undefined;
 
       let abilities = false;
       let attributes = game.system.template.Actor.character.attributes;
@@ -63,6 +68,22 @@ $(document).ready(() => {
           name: "will",
           formula: "$will"
         },
+        b: {
+          name: "bonus",
+          formula: "#b"
+        },
+        bb: {
+          name: "double bonus",
+          formula: "#bb"
+        },
+        p: {
+          name: "penalty",
+          formula: "#p"
+        },
+        pp: {
+          name: "double penalty",
+          formula: "#pp"
+        }
       };
 
       // Build the template.
@@ -79,10 +100,10 @@ $(document).ready(() => {
           title: 'Roll Dice',
           content: dlg,
           buttons: {
-            roll: {
-              label: 'Roll',
-              callback: () => dcRollDice(actor)
-            }
+            // roll: {
+            //   label: 'Roll',
+            //   callback: () => dcRollDice(actor)
+            // }
           }
         }, dialogOptions).render(true);
       });
@@ -118,6 +139,7 @@ $(document).ready(() => {
     let $formulaInput = $(document).find('.dice-calculator textarea');
     let currentFormula = $formulaInput.val();
     let currentFormulaArray = currentFormula.split(' ');
+    let rollMode = $(document).find('.dice-calculator label')[0].control.value;
     let last = currentFormulaArray.slice(-1)[0];
     let skip = false;
 
@@ -165,8 +187,15 @@ $(document).ready(() => {
       }
     }
 
+    // Handle roll
+    if (buttonFormula === "ROLL") {
+      let token = canvas.tokens.get(ChatMessage.getSpeaker().token);
+      let actor = token ? token.actor : undefined;
+
+      dcRollDice(actor, rollMode);
+    }
     // Handle clear.
-    if (buttonFormula === 'CLEAR') {
+    else if (buttonFormula === 'CLEAR') {
       currentFormula = '';
     }
     // Handle backspace/delete.

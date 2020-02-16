@@ -2,7 +2,7 @@
   "name": "megacity-mercenaries",
   "title": "Megacity Mercenaries",
   "description": "",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "0.0.1",
   "minimumCoreVersion": "0.4.4",
   "templateVersion": 2,
   "author": "jmckinney",
@@ -19,5 +19,5 @@
   "secondaryTokenAttribute": "",
   "url": "https://github.com/jason-mckinney/megacity-mercenaries",
   "manifest": "https://raw.githubusercontent.com/jason-mckinney/megacity-mercenaries/master/system.json",
-  "download": "https://github.com/jason-mckinney/megacity-mercenaries/releases/download/0.0.1-SNAPSHOT/megacity-mercenaries-0.0.1-SNAPSHOT.zip"
+  "download": "https://github.com/jason-mckinney/megacity-mercenaries/releases/download/0.0.1/megacity-mercenaries-0.0.1.zip"
 }
